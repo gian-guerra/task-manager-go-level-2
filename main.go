@@ -3,10 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+
 	"os"
 	"strings"
 
 	"github.com/gian-guerra/task-manager-go-level-2/core"
+	"github.com/gian-guerra/task-manager-go-level-2/utils"
 )
 
 func main() {
@@ -34,37 +36,36 @@ func main() {
 			tittle := scanner.Text()
 			task := service.AddTask(tittle)
 
-			fmt.Printf("Task added successfully with ID %s\n", task.ID)
-
+			utils.PrintSuccessExecution(task.ID)
 		case "list":
 			tasks := service.ListTasks()
-			fmt.Printf("%v\n", tasks)
+			utils.PrintTasks(tasks)
 
 		case "complete":
 			if len(parts) < 2 {
-				fmt.Println("Please provide the task ID")
+				utils.PrintMissingID()
 				continue
 			}
 			id := parts[1]
 			err := service.CompleteTask(id)
 			if err != nil {
-				fmt.Println("Error: ", err)
+				utils.PrintError(err)
 				return
 			}
 
-			fmt.Println("Task completed!")
+			utils.PrintSuccessExecution(id)
 		case "delete":
 			if len(parts) < 2 {
-				fmt.Println("Please provide the task ID")
+				utils.PrintMissingID()
 				continue
 			}
 			id := parts[1]
 			err := service.DeleteTask(id)
 			if err != nil {
-				fmt.Println("Error in delete process: ", err)
+				utils.PrintError(err)
 				return
 			}
-			fmt.Println("Task deleted!")
+			utils.PrintSuccessExecution(id)
 		case "exit":
 			fmt.Println("Bye!")
 			return
