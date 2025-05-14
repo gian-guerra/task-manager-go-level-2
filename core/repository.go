@@ -14,7 +14,7 @@ type TaskRepository struct {
 
 var _ ports.TaskRepositoryPort = &TaskRepository{}
 
-func NewStore() *TaskRepository {
+func NewRepository() *TaskRepository {
 	return &TaskRepository{
 		tasks: make(map[string]models.Task),
 	}
